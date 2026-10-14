@@ -1,0 +1,11 @@
+{
+  "name": "work_mode",
+  "description": "Opens the browser and the notes app for a work session.",
+  "triggers": {"ru": ["режим работы", "включи режим работы"], "en": ["work mode", "start work mode"]},
+  "steps": [
+    {"type": "speak", "text": "Включаю режим работы."},
+    {"type": "open", "target": "браузер"},
+    {"type": "wait", "seconds": 1},
+    {"type": "open", "target": "блокнот"}
+  ]
+}

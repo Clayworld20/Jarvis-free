@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+
+# JARVIS runtime data
+config/settings.json
+config/*.tmp
+data/
+logs/
+resources/models/*
+!resources/models/README.md
+*.zip

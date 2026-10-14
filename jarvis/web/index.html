@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JARVIS</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="app">
+    <nav class="sidebar" id="sidebar">
+      <div class="nav-group">
+        <button class="nav-btn active" data-page="home" title="Главная" aria-label="Главная">
+          <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>
+          <span class="nav-label" data-i18n="nav_home">Главная</span>
+        </button>
+        <button class="nav-btn" data-page="chat" title="Чат" aria-label="Чат">
+          <svg viewBox="0 0 24 24"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5A8.5 8.5 0 1 1 21 12z"/></svg>
+          <span class="nav-label" data-i18n="nav_chat">Чат</span>
+        </button>
+        <button class="nav-btn" data-page="logs" title="Журнал" aria-label="Журнал">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <span class="nav-label" data-i18n="nav_logs">Журнал</span>
+        </button>
+        <button class="nav-btn" data-page="commands" title="Команды" aria-label="Команды">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          <span class="nav-label" data-i18n="nav_commands">Команды</span>
+        </button>
+      </div>
+      <div class="nav-group">
+        <button class="nav-btn" data-page="settings" title="Настройки" aria-label="Настройки">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+          <span class="nav-label" data-i18n="nav_settings">Настройки</span>
+        </button>
+        <button class="nav-btn" id="toggle-sidebar" title="Развернуть" aria-label="Развернуть">
+          <svg viewBox="0 0 24 24" class="chevron"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <main class="content">
+      <!-- HOME -->
+      <section class="page active" id="page-home">
+        <div class="orb-wrap"><canvas id="orb"></canvas></div>
+        <p class="prompt" id="prompt"></p>
+        <p class="sub" id="sub"></p>
+        <div class="chips">
+          <span class="chip" id="chip-state"></span>
+          <span class="chip" id="chip-mic"></span>
+          <span class="chip" id="chip-tts"></span>
+        </div>
+        <button class="btn stop-btn" id="btn-stop" type="button" data-i18n="stop_btn">Стоп</button>
+        <div class="last" id="last"></div>
+      </section>
+
+      <!-- CHAT -->
+      <section class="page" id="page-chat">
+        <h2 data-i18n="chat_title">Чат</h2>
+        <div class="chat" id="chat"></div>
+        <form class="chat-input" id="chat-form" autocomplete="off">
+          <input id="chat-text" type="text" data-i18n-ph="chat_placeholder" placeholder="Введите команду…">
+          <button type="submit" class="btn primary" data-i18n="send">Отправить</button>
+        </form>
+      </section>
+
+      <!-- LOGS -->
+      <section class="page" id="page-logs">
+        <div class="toolbar">
+          <h2 data-i18n="logs_title">Журнал</h2>
+          <select id="log-level">
+            <option value="" data-i18n="all">Все</option>
+            <option value="INFO">INFO</option>
+            <option value="WARNING">WARNING</option>
+            <option value="ERROR">ERROR</option>
+          </select>
+        </div>
+        <div class="logs" id="logs"></div>
+      </section>
+
+      <!-- COMMANDS -->
+      <section class="page" id="page-commands">
+        <div class="toolbar">
+          <h2 data-i18n="commands_title">Команды</h2>
+          <button class="btn" id="reload-scripts" data-i18n="reload_scripts">Перезагрузить сценарии</button>
+        </div>
+        <h3 data-i18n="intents">Голосовые команды</h3>
+        <div class="cards" id="intent-cards"></div>
+        <h3 data-i18n="scripts">Сценарии</h3>
+        <div class="cards" id="script-cards"></div>
+        <div class="errors" id="script-errors"></div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="page" id="page-settings">
+        <h2 data-i18n="settings_title">Настройки</h2>
+        <form id="settings-form" class="settings">
+          <fieldset>
+            <legend data-i18n="s_general">Основные</legend>
+            <label><span data-i18n="s_language">Язык</span>
+              <select name="language"><option value="ru">Русский</option><option value="en">English</option></select></label>
+            <label><span data-i18n="s_wake_ru">Слова активации (RU)</span><input name="wake_ru" type="text"></label>
+            <label><span data-i18n="s_wake_en">Слова активации (EN)</span><input name="wake_en" type="text"></label>
+            <label><span data-i18n="s_timeout">Ожидание команды, сек</span><input name="listen_timeout_sec" type="number" min="2" max="60" step="1"></label>
+            <label><span data-i18n="s_confirm">Подтверждать выключение/перезагрузку</span><input name="confirm_power_actions" type="checkbox"></label>
+            <label><span data-i18n="s_delay">Задержка выключения, сек</span><input name="power_delay_sec" type="number" min="5" max="600" step="1"></label>
+            <label><span data-i18n="s_any_app">Запускать любые программы по имени</span><input name="allow_any_app" type="checkbox"></label>
+            <label><span data-i18n="s_search">Адрес поиска ({query})</span><input name="search_url" type="text"></label>
+          </fieldset>
+          <fieldset>
+            <legend data-i18n="s_audio">Микрофон и шумы</legend>
+            <label><span data-i18n="s_device">Микрофон</span><select name="input_device"></select></label>
+            <label><span data-i18n="s_noise">Шумоподавление (фильтр + шлюз)</span><input name="noise_filter" type="checkbox"></label>
+            <label><span data-i18n="s_highpass">Фильтр низких частот, Гц</span><input name="highpass_hz" type="number" min="0" max="500" step="5"></label>
+            <label><span data-i18n="s_gate">Порог шлюза, дБ</span><input name="gate_margin_db" type="number" min="0" max="40" step="0.5"></label>
+          </fieldset>
+          <fieldset>
+            <legend data-i18n="s_voice">Голос</legend>
+            <label><span data-i18n="s_tts">Озвучивать ответы</span><input name="tts_enabled" type="checkbox"></label>
+            <label><span data-i18n="s_rate">Скорость речи</span><input name="tts_rate" type="range" min="50" max="400" step="5"><output id="rate-out"></output></label>
+            <label><span data-i18n="s_volume">Громкость</span><input name="tts_volume" type="range" min="0" max="1" step="0.05"><output id="vol-out"></output></label>
+            <label><span data-i18n="s_voice_name">Голос (часть названия, необязательно)</span><input name="tts_voice" type="text"></label>
+          </fieldset>
+          <fieldset class="wide">
+            <legend data-i18n="s_apps">Приложения и сайты</legend>
+            <p class="hint" data-i18n="apps_hint">По одной записи в строке: «название = программа или https://адрес».</p>
+            <textarea name="apps" rows="8" spellcheck="false"></textarea>
+          </fieldset>
+          <div class="form-actions wide">
+            <button type="submit" class="btn primary" data-i18n="save">Сохранить</button>
+            <span id="settings-msg" class="msg"></span>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>

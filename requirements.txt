@@ -1,0 +1,9 @@
+# Offline speech recognition (Apache-2.0)
+vosk>=0.3.45
+# Audio capture (PortAudio is bundled in the Windows wheel)
+sounddevice>=0.4.6
+numpy>=1.24
+# Offline text-to-speech (SAPI5 on Windows)
+pyttsx3>=2.90
+# Native window for the dashboard (WebView2 on Windows); optional, falls back to a browser
+pywebview>=5.0

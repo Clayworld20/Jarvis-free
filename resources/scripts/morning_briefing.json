@@ -1,0 +1,9 @@
+{
+  "name": "morning_briefing",
+  "description": "Greets the user, reads the time and opens the news search.",
+  "triggers": {"ru": ["доброе утро джарвис", "утренний брифинг"], "en": ["morning briefing"]},
+  "steps": [
+    {"type": "speak", "text": "Доброе утро. Открываю новости."},
+    {"type": "search", "query": "новости сегодня"}
+  ]
+}
